@@ -1,13 +1,17 @@
 "use client";
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import { FiUser } from "react-icons/fi";
 import { HiMenuAlt4 } from "react-icons/hi";
+import { IoIosClose } from "react-icons/io";
 
 
 
 const Navbar = () => {
+
+  const [showNav, setShowNav] = useState(false)
+
   const navItems = [
     {
       name: "Home",
@@ -47,14 +51,15 @@ const Navbar = () => {
       </Link>
 
       <div className='lg:hidden text-2xl z-30'>
-        <button>
-          <HiMenuAlt4 />
+        <button onClick={()=> setShowNav(!showNav)}>
+          {
+            showNav ? <IoIosClose className='text-3xl' /> : <HiMenuAlt4 />
+          }
         </button>
       </div>
 
-
       {/* mobile and tablet navbar */}
-      <div className='bg-white h-full w-full lg:hidden block absolute top-0 left-0 p-5'>
+      <div className={`bg-white h-full w-full lg:hidden absolute top-0 left-0 p-5 ${showNav ? "block" : "hidden"}`}>
         <div className='flex flex-col items-center gap-10 mb-10 mt-25'>
           {
             navItems.map((item, index) => (

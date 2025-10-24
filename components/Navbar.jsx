@@ -47,7 +47,7 @@ const Navbar = () => {
         }
       </div>
 
-      <Link href={"#"} className='lg:flex hidden items-center gap-1 bg-blue-600 text-white px-6 py-2 rounded-full'>
+      <Link href={"/auth/signin"} className='lg:flex hidden items-center gap-1 bg-blue-600 text-white px-6 py-2 rounded-full'>
         <FiUser className='text-xl' />
         <p>My Account</p>
       </Link>
@@ -69,7 +69,7 @@ const Navbar = () => {
             ))
           }
         </div>
-        <Link href={"#"} className='flex items-center justify-center gap-1 bg-blue-600 text-white px-6 py-2 rounded-full'>
+        <Link href={"/auth/signin"} className='flex items-center justify-center gap-1 bg-blue-600 text-white px-6 py-2 rounded-full'>
           <FiUser className='text-xl' />
           <p>My Account</p>
         </Link>

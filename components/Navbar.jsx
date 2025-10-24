@@ -10,7 +10,9 @@ import { IoIosClose } from "react-icons/io";
 
 const Navbar = () => {
 
-  const [showNav, setShowNav] = useState(false)
+  const [showNav, setShowNav] = useState(false);
+  console.log(showNav);
+  
 
   const navItems = [
     {

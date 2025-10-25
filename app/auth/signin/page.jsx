@@ -2,9 +2,12 @@ import React from 'react'
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { signIn } from "@/auth"
+import { auth, signIn } from "@/auth"
 
-const page = () => {
+const page = async () => {
+    const session = await auth()
+    console.log(session);
+    
     return (
         <main className='min-h-dvh flex items-center justify-center lg:p-10 p-5'>
             <section className='shadow-md rounded-md p-5 lg:w-1/3 mx-auto space-y-10 lg:space-y-20'>
@@ -22,11 +25,17 @@ const page = () => {
                         <span className='text-xs text-gray-600 w-full text-center'>or Sign in with</span>
                         <div className='border w-full border-gray-500'></div>
                     </div>
-
-                    <button className='border border-gray-200 flex items-center justify-center gap-2 px-2 py-3 rounded-full'>
-                        <FcGoogle className='text-xl' />
-                        <p className='text-gray-700'>Continue with Google</p>
-                    </button>
+                    <form
+                        action={async () => {
+                            "use server"
+                            await signIn("google")
+                        }}
+                    >
+                        <button type='submit' className='border border-gray-200 flex items-center justify-center gap-2 px-2 py-3 rounded-full w-full'>
+                            <FcGoogle className='text-xl' />
+                            <p className='text-gray-700'>Continue with Google</p>
+                        </button>
+                    </form>
                     <button className='border border-gray-200 flex items-center justify-center gap-2 px-2 py-3 rounded-full'>
                         <FaGithub className='text-xl' />
                         <p className='text-gray-700'>Continue with Github</p>

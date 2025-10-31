@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Field, Form, Formik,  ErrorMessage } from "formik";
+import { Field, Form, Formik, ErrorMessage } from "formik";
 import { FaPaperPlane } from "react-icons/fa";
 import * as Yup from "yup";
 
@@ -17,10 +17,9 @@ const page = () => {
     category: Yup.string().required("This is a required field"),
   });
 
-  const handleSubmit = async ()=>{
-    console.log("Form Submitted");
-    
-  }
+  const handleSubmit = async (values) => {
+    console.log("Form Submitted", values);
+  };
 
   return (
     <main className="min-h-dvh">
@@ -39,31 +38,52 @@ const page = () => {
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={()=> handleSubmit()}
+            onSubmit={(values) => {
+              console.log(values);
+            }}
           >
             <Form className="flex flex-col gap-3">
-              <Field
-                className="border border-gray-300 outline-none p-2 rounded-md"
-                placeholder="Error Message..."
-                as="textarea"
-                rows="5"
-                name="error"
-              />
-              <ErrorMessage name="error"/>
-              <Field
-                className="border border-gray-300 outline-none p-2 rounded-md"
-                placeholder="Possible fix..."
-                as="textarea"
-                rows="5"
-                name="fix"
-              />
-              <ErrorMessage name="fix"/>
-              <Field
-                className="p-2 rounded-md border border-gray-300 outline-none"
-                placeholder="Category..."
-                name="category"
-              />
-              <ErrorMessage name="category"/>
+              <div className="flex flex-col gap-1">
+                <Field
+                  className="border border-gray-300 outline-none p-2 rounded-md"
+                  placeholder="Error Message..."
+                  as="textarea"
+                  rows="5"
+                  name="error"
+                />
+                <ErrorMessage
+                  name="error"
+                  component={"p"}
+                  className="text-xs text-red-600"
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <Field
+                  className="border border-gray-300 outline-none p-2 rounded-md"
+                  placeholder="Possible fix..."
+                  as="textarea"
+                  rows="5"
+                  name="fix"
+                />
+                <ErrorMessage
+                  name="fix"
+                  component={"p"}
+                  className="text-xs text-red-600"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <Field
+                  className="p-2 rounded-md border border-gray-300 outline-none"
+                  placeholder="Category..."
+                  name="category"
+                />
+                <ErrorMessage
+                  name="category"
+                  component={"p"}
+                  className="text-xs text-red-600"
+                />
+              </div>
 
               <button
                 type="submit"

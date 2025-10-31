@@ -17,6 +17,11 @@ const page = () => {
     category: Yup.string().required("This is a required field"),
   });
 
+  const handleSubmit = async ()=>{
+    console.log("Form Submitted");
+    
+  }
+
   return (
     <main className="min-h-dvh">
       <section className="space-y-10">
@@ -34,6 +39,7 @@ const page = () => {
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
+            onSubmit={()=> handleSubmit()}
           >
             <Form className="flex flex-col gap-3">
               <Field
@@ -43,6 +49,7 @@ const page = () => {
                 rows="5"
                 name="error"
               />
+              <ErrorMessage name="error"/>
               <Field
                 className="border border-gray-300 outline-none p-2 rounded-md"
                 placeholder="Possible fix..."
@@ -50,11 +57,13 @@ const page = () => {
                 rows="5"
                 name="fix"
               />
+              <ErrorMessage name="fix"/>
               <Field
                 className="p-2 rounded-md border border-gray-300 outline-none"
                 placeholder="Category..."
                 name="category"
               />
+              <ErrorMessage name="category"/>
 
               <button
                 type="submit"

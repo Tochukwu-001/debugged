@@ -3,11 +3,14 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { auth, signIn } from "@/auth"
+import { redirect } from 'next/navigation';
 
 const page = async () => {
     const session = await auth()
     console.log(session);
-    
+    if (session) {
+        redirect("/post-fix")
+    }
     return (
         <main className='min-h-dvh flex items-center justify-center lg:p-10 p-5'>
             <section className='shadow-md rounded-md p-5 lg:w-1/3 mx-auto space-y-10 lg:space-y-20'>

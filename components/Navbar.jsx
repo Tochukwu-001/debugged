@@ -2,10 +2,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { FiUser } from "react-icons/fi";
+import { FiUser, FiLogOut } from "react-icons/fi";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { IoIosClose } from "react-icons/io";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -96,7 +96,15 @@ const Navbar = () => {
           >
             <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={handleClose}>
+              <button
+                onClick={() => signOut()}
+                className="flex items-center gap-1 text-red-600"
+              >
+                <FiLogOut />
+                <span>Logout</span>
+              </button>
+            </MenuItem>
           </Menu>
         </div>
       ) : (

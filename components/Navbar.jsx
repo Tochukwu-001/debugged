@@ -69,7 +69,7 @@ const Navbar = () => {
         //   src={session?.user?.image}
         //   alt={session?.user?.name.slice(0, 1).toUpperCase()}
         // />
-        <div>
+        <div className="max-lg:ml-auto z-30">
           <button
             id="basic-button"
             aria-controls={open ? "basic-menu" : undefined}
@@ -109,7 +109,7 @@ const Navbar = () => {
         </Link>
       )}
 
-      <div className="lg:hidden text-2xl z-30">
+      <div className="lg:hidden text-2xl z-30 ml-3">
         <button onClick={() => setShowNav(!showNav)}>
           {showNav ? <IoIosClose className="text-3xl" /> : <HiMenuAlt4 />}
         </button>
@@ -128,13 +128,15 @@ const Navbar = () => {
             </Link>
           ))}
         </div>
-        <Link
-          href={"/auth/signin"}
-          className="flex items-center justify-center gap-1 bg-blue-600 text-white px-6 py-2 rounded-full"
-        >
-          <FiUser className="text-xl" />
-          <p>My Account</p>
-        </Link>
+        {!session && (
+          <Link
+            href={"/auth/signin"}
+            className="flex items-center justify-center gap-1 bg-blue-600 text-white px-6 py-2 rounded-full"
+          >
+            <FiUser className="text-xl" />
+            <p>My Account</p>
+          </Link>
+        )}
       </div>
     </nav>
   );

@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { FiUser } from "react-icons/fi";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { IoIosClose } from "react-icons/io";
+import { useSession } from "next-auth/react"
 
 
 
@@ -12,6 +13,9 @@ const Navbar = () => {
 
   const [showNav, setShowNav] = useState(false);
   console.log(showNav);
+
+  const {data:session} = useSession()
+  console.log(session);
   
 
   const navItems = [

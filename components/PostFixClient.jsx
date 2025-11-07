@@ -1,10 +1,11 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { FaPaperPlane } from "react-icons/fa";
 import * as Yup from "yup";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/config/firebaseConfig";
+import { FiLoader } from "react-icons/fi";
 
 const PostFixClient = ({ session }) => {
   const initialValues = {
@@ -23,6 +24,8 @@ const PostFixClient = ({ session }) => {
     console.log("Form Submitted", values);
   };
 
+  const [loading, setLoading] = useState(false);
+
   return (
     <main className="min-h-dvh">
       <section className="space-y-10">
@@ -40,8 +43,9 @@ const PostFixClient = ({ session }) => {
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={async (values) => {
+            onSubmit={async (values, {resetForm}) => {
               try {
+                setLoading(true)
                 const postObject = {
                   name: session.user.name,
                   img: session.user.image,
@@ -51,9 +55,12 @@ const PostFixClient = ({ session }) => {
                 // console.log(postObject);
                 const docRef = await addDoc(collection(db, "fixlog"), postObject)
                 console.log("Document written with ID: ", docRef.id);
+                resetForm();
               } catch (error) {
                 console.error("An error occurred", error)
                 alert("An error occurred. Try again later.")
+              } finally {
+                setLoading(false)
               }
             }}
           >
@@ -102,10 +109,15 @@ const PostFixClient = ({ session }) => {
 
               <button
                 type="submit"
-                className="outline-none bg-blue-600 text-white p-2 rounded-md flex items-center gap-3 justify-center hover:bg-blue-700 transition-colors duration-200"
+                className="outline-none bg-blue-600 text-white p-2 rounded-md flex items-center justify-center hover:bg-blue-700 transition-colors duration-200"
               >
-                <FaPaperPlane />
-                <span>Post</span>
+                {
+                  loading ? <FiLoader className="text-xl animate-spin" /> :
+                    <span className="flex items-center gap-3 justify-center">
+                      <FaPaperPlane />
+                      <span>Post</span>
+                    </span>
+                }
               </button>
             </Form>
           </Formik>

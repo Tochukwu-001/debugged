@@ -10,7 +10,7 @@ const page = async () => {
     redirect("/auth/signin")
   }
   return (
-    <div className='my-5'>
+    <div className='mb-5'>
       <PostFixClient session={session}/>
     </div>
   )

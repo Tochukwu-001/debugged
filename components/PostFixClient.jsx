@@ -3,8 +3,10 @@ import React from "react";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { FaPaperPlane } from "react-icons/fa";
 import * as Yup from "yup";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "@/config/firebaseConfig";
 
-const PostFixClient = ({session}) => {
+const PostFixClient = ({ session }) => {
   const initialValues = {
     error: "",
     fix: "",
@@ -38,10 +40,20 @@ const PostFixClient = ({session}) => {
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={(values) => {
-              console.log(values);
-              const postObject = {
-                // name: 
+            onSubmit={async (values) => {
+              try {
+                const postObject = {
+                  name: session.user.name,
+                  img: session.user.image,
+                  timestamp: new Date().toLocaleDateString(),
+                  ...values
+                }
+                // console.log(postObject);
+                const docRef = await addDoc(collection(db, "fixlog"), postObject)
+                console.log("Document written with ID: ", docRef.id);
+              } catch (error) {
+                console.error("An error occurred", error)
+                alert("An error occurred. Try again later.")
               }
             }}
           >

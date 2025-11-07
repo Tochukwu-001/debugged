@@ -4,7 +4,7 @@ import { Field, Form, Formik, ErrorMessage } from "formik";
 import { FaPaperPlane } from "react-icons/fa";
 import * as Yup from "yup";
 
-const PostFixClient = () => {
+const PostFixClient = ({session}) => {
   const initialValues = {
     error: "",
     fix: "",
@@ -40,6 +40,9 @@ const PostFixClient = () => {
             validationSchema={validationSchema}
             onSubmit={(values) => {
               console.log(values);
+              const postObject = {
+                // name: 
+              }
             }}
           >
             <Form className="flex flex-col gap-3">

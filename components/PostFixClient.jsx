@@ -6,8 +6,28 @@ import * as Yup from "yup";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/config/firebaseConfig";
 import { FiLoader } from "react-icons/fi";
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  // border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 const PostFixClient = ({ session }) => {
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const [loading, setLoading] = useState(false);
 
@@ -47,7 +67,7 @@ const PostFixClient = ({ session }) => {
               try {
                 setLoading(true)
                 const postObject = {
-                  name: session.user.name,
+                  author: session.user.name,
                   img: session.user.image,
                   timestamp: new Date().toLocaleDateString(),
                   ...values
@@ -56,6 +76,7 @@ const PostFixClient = ({ session }) => {
                 const docRef = await addDoc(collection(db, "fixlog"), postObject)
                 console.log("Document written with ID: ", docRef.id);
                 resetForm();
+                handleOpen();
               } catch (error) {
                 console.error("An error occurred", error)
                 alert("An error occurred. Try again later.")
@@ -65,6 +86,16 @@ const PostFixClient = ({ session }) => {
             }}
           >
             <Form className="flex flex-col gap-3">
+              <div className="flex flex-col gap-1">
+                <Field className="border border-gray-300 outline-none p-2 rounded-md"
+                  placeholder="Error Name..."
+                  name="name" />
+                <ErrorMessage
+                  name="name"
+                  component={"p"}
+                  className="text-xs text-red-600"
+                />
+              </div>
               <div className="flex flex-col gap-1">
                 <Field
                   className="border border-gray-300 outline-none p-2 rounded-md"
@@ -123,6 +154,24 @@ const PostFixClient = ({ session }) => {
           </Formik>
         </div>
       </section>
+
+      <div>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Submitted
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Error logged and fix published. Sharing knowledge makes debugging faster for everyone.
+            </Typography>
+          </Box>
+        </Modal>
+      </div>
     </main>
   );
 };

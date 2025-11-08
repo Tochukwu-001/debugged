@@ -8,23 +8,23 @@ import { db } from "@/config/firebaseConfig";
 import { FiLoader } from "react-icons/fi";
 
 const PostFixClient = ({ session }) => {
+
+  const [loading, setLoading] = useState(false);
+
   const initialValues = {
     error: "",
     fix: "",
     category: "",
+    name: ""
   };
 
   const validationSchema = Yup.object({
     error: Yup.string().required("This is a required field"),
     fix: Yup.string().required("This is a required field"),
     category: Yup.string().required("This is a required field"),
+    name: Yup.string().required("This is a required field")
   });
 
-  const handleSubmit = async (values) => {
-    console.log("Form Submitted", values);
-  };
-
-  const [loading, setLoading] = useState(false);
 
   return (
     <main className="min-h-dvh">
@@ -43,7 +43,7 @@ const PostFixClient = ({ session }) => {
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={async (values, {resetForm}) => {
+            onSubmit={async (values, { resetForm }) => {
               try {
                 setLoading(true)
                 const postObject = {

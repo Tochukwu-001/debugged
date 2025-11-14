@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from 'react'
 import { IoCopyOutline } from "react-icons/io5";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { db } from '@/config/firebaseConfig';
 import { FiLoader } from 'react-icons/fi';
 import { FaRegTrashAlt } from "react-icons/fa";
 
 
-const FixesComponent = () => {
+const FixesComponent = ({ session }) => {
 
     const [errordetails, setErrorDetails] = useState([])
     const [fetching, setFetching] = useState(true)
@@ -40,6 +40,15 @@ const FixesComponent = () => {
 
     }
     useEffect(() => { fetchLogs() }, [errordetails])
+
+    const handleDelete = async (id) => {
+        try {
+            await deleteDoc(doc(db, "fixlog", id))
+        } catch (error) {
+            console.error("An error occurred while deleting document:", error)
+            alert("An error occurred. Try again later")
+        }
+    }
 
     return (
         <main className='min-h-dvh p-5'>
@@ -79,9 +88,12 @@ const FixesComponent = () => {
                                         <p className='text-sm font-light'>Posted on {detail.timestamp}</p>
                                         <button className='flex items-center gap-1 text-sm'><IoCopyOutline />Copy Fix</button>
                                     </div>
-                                    <button className='absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-200'>
-                                        <FaRegTrashAlt />
-                                    </button>
+                                    {
+                                        session.user.id == detail.uid &&
+                                        <button onClick={() => handleDelete(detail.id)} className='absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-200'>
+                                            <FaRegTrashAlt />
+                                        </button>
+                                    }
                                 </div>
                             ))
                         }

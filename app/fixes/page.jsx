@@ -6,7 +6,7 @@ const page = async () => {
   const session = await auth()
   return (
     <main>
-      <FixesComponent/>
+      <FixesComponent session={session}/>
     </main>
   )
 }

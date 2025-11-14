@@ -9,9 +9,14 @@ const page = async () => {
     const session = await auth()
     console.log(session);
     if (session) {
+<<<<<<< HEAD
        redirect("/post-fix")
     }
     
+=======
+        redirect("/post-fix")
+    }
+>>>>>>> 42f3d01560e03df74dfd46184787f220e83ad268
     return (
         <main className='min-h-dvh flex items-center justify-center lg:p-10 p-5'>
             <section className='shadow-md rounded-md p-5 lg:w-1/3 mx-auto space-y-10 lg:space-y-20'>

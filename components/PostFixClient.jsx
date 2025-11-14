@@ -69,7 +69,6 @@ const PostFixClient = ({ session }) => {
                 const postObject = {
                   author: session.user.name,
                   img: session.user.image,
-                  uid: session.user.id,
                   timestamp: new Date().toLocaleDateString(),
                   ...values
                 }

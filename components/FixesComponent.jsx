@@ -53,7 +53,7 @@ const FixesComponent = () => {
                         {
                             errordetails.map((detail, i) => (
 
-                                <div key={i} className='shadow-md lg:p-5 p-3 rounded-md space-y-3 relative'>
+                                <div key={i} className='shadow-md lg:p-5 p-3 rounded-md space-y-3 relative group'>
                                     <div className='flex items-center justify-between'>
                                         <div className='flex items-center gap-1'>
                                             <img src={detail.img} alt="logo" className='w-8 h-8 rounded-full' />
@@ -79,7 +79,7 @@ const FixesComponent = () => {
                                         <p className='text-sm font-light'>Posted on {detail.timestamp}</p>
                                         <button className='flex items-center gap-1 text-sm'><IoCopyOutline />Copy Fix</button>
                                     </div>
-                                    <button className='absolute bottom-0'>
+                                    <button className='absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-200'>
                                         <FaRegTrashAlt />
                                     </button>
                                 </div>

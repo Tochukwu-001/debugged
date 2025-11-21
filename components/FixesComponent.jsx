@@ -11,6 +11,7 @@ const FixesComponent = ({ session }) => {
 
     const [errordetails, setErrorDetails] = useState([])
     const [fetching, setFetching] = useState(true)
+    const [copiedId, setCopiedId] = useState(null);
 
     const fetchLogs = async () => {
         try {
@@ -18,18 +19,18 @@ const FixesComponent = ({ session }) => {
             const querySnapshot = await getDocs(collection(db, "fixlog"))
             querySnapshot.forEach((doc) => {
                 // doc.data() is never undefined for query doc snapshots
-                console.log(doc.id, " => ", doc.data());
+                // console.log(doc.id, " => ", doc.data());
                 let errorFix = {
                     id: doc.id,
                     ...doc.data()
                 }
-                console.log(errorFix);
+                // console.log(errorFix);
                 errorDetailsFetch.push(errorFix)
-                console.log(errorDetailsFetch);
+                // console.log(errorDetailsFetch);
 
             });
             setErrorDetails(errorDetailsFetch)
-            console.log(errordetails);
+            // console.log(errordetails);x
         } catch (error) {
             console.error("An error occurred while fetching", error)
             alert("An error occurred. Try again later")
@@ -49,6 +50,18 @@ const FixesComponent = ({ session }) => {
             alert("An error occurred. Try again later")
         }
     }
+
+    const handleCopy = async (id, fixText) => {
+        try {
+            await navigator.clipboard.writeText(fixText);
+            setCopiedId(id);
+            setTimeout(() => setCopiedId(null), 2000);
+        } catch (error) {
+            console.error("Failed to copy text:", error);
+            alert("Failed to copy. Try again.");
+        }
+    };
+
 
     return (
         <main className='min-h-dvh p-5'>
@@ -86,7 +99,13 @@ const FixesComponent = ({ session }) => {
                                     </div>
                                     <div className='flex items-center justify-between lg:mt-10'>
                                         <p className='text-sm font-light'>Posted on {detail.timestamp}</p>
-                                        <button className='flex items-center gap-1 text-sm'><IoCopyOutline />Copy Fix</button>
+                                        <button
+                                            onClick={() => handleCopy(detail.id, detail.fix)}
+                                            className='flex items-center gap-1 text-sm'
+                                        >
+                                            {copiedId === detail.id ? "Copied!" : <><IoCopyOutline />Copy Fix</>}
+                                        </button>
+
                                     </div>
                                     {
                                         session.user.id == detail.uid &&

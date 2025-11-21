@@ -12,10 +12,10 @@ import MenuItem from "@mui/material/MenuItem";
 
 const Navbar = () => {
   const [showNav, setShowNav] = useState(false);
-  console.log(showNav);
+  // console.log(showNav);
 
   const { data: session } = useSession();
-  console.log(session);
+  // console.log(session);
 
   const navItems = [
     {
@@ -46,8 +46,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex items-center justify-between shadow-md px-5 py-3">
-      <Link href={"/"} className="flex items-center gap-1 z-30">
+    <nav className="flex items-center justify-between shadow-md px-5 py-3 bg-white">
+      <Link href={"/"} className="flex items-center gap-1 z-50">
         <Image src={"/logo.png"} alt="logo" width={35} height={35} />
         <p className="font-semibold text-xl lg:flex hidden">Debugg</p>
       </Link>
@@ -69,7 +69,7 @@ const Navbar = () => {
         //   src={session?.user?.image}
         //   alt={session?.user?.name.slice(0, 1).toUpperCase()}
         // />
-        <div className="max-lg:ml-auto z-30">
+        <div className="max-lg:ml-auto z-50">
           <button
             id="basic-button"
             aria-controls={open ? "basic-menu" : undefined}
@@ -117,7 +117,7 @@ const Navbar = () => {
         </Link>
       )}
 
-      <div className="lg:hidden text-2xl z-30 ml-3">
+      <div className="lg:hidden text-2xl z-50 ml-3">
         <button onClick={() => setShowNav(!showNav)}>
           {showNav ? <IoIosClose className="text-3xl" /> : <HiMenuAlt4 />}
         </button>
@@ -125,13 +125,16 @@ const Navbar = () => {
 
       {/* mobile and tablet navbar */}
       <div
-        className={`bg-white h-full w-full lg:hidden absolute top-0 left-0 p-5 ${
-          showNav ? "block" : "hidden"
-        }`}
+        className={`bg-white z-30 h-full w-full lg:hidden absolute top-0 left-0 p-5 ${showNav ? "block" : "hidden"
+          }`}
       >
         <div className="flex flex-col items-center gap-10 mb-10 mt-25">
           {navItems.map((item, index) => (
-            <Link key={index} href={item.url}>
+            <Link
+              onClick={() => setShowNav(false)}
+              key={index}
+              href={item.url}
+            >
               {item.name}
             </Link>
           ))}

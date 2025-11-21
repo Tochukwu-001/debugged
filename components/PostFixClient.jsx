@@ -75,7 +75,7 @@ const PostFixClient = ({ session }) => {
                 }
                 // console.log(postObject);
                 const docRef = await addDoc(collection(db, "fixlog"), postObject)
-                console.log("Document written with ID: ", docRef.id);
+                // console.log("Document written with ID: ", docRef.id);
                 resetForm();
                 handleOpen();
               } catch (error) {
